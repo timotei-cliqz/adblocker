@@ -1,4 +1,4 @@
-import { getPublicSuffix } from 'tldjs';
+import tldjs from 'tldjs';
 import { CosmeticFilter } from './parsing/cosmetic-filter';
 import { NetworkFilter } from './parsing/network-filter';
 import { fastStartsWith } from './utils';
@@ -214,7 +214,7 @@ function matchHostname(hostname: string, hostnamePattern: string): boolean {
     const entity = hostnamePattern.slice(0, -2);
 
     // Ignore TLDs suffix
-    const publicSuffix = getPublicSuffix(hostname);
+    const publicSuffix = tldjs.getPublicSuffix(hostname);
     const hostnameWithoutSuffix = hostname.substr(
       0,
       hostname.length - publicSuffix.length - 1,

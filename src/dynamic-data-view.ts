@@ -1,4 +1,4 @@
-import { TextDecoder, TextEncoder } from 'text-encoding';
+import * as textEncoding from 'text-encoding';
 
 /**
  * @class DynamicDataView
@@ -71,7 +71,7 @@ export default class DynamicDataView {
   }
 
   public pushUTF8(str: string): void {
-    const buffer = new TextEncoder().encode(str);
+    const buffer = new textEncoding.TextEncoder().encode(str);
     this.pushUint16(buffer.byteLength);
     this.pushBytes(buffer);
   }
@@ -148,7 +148,7 @@ export default class DynamicDataView {
   }
 
   public getUTF8(): string {
-    return new TextDecoder().decode(this.getBytes(this.getUint16()));
+    return new textEncoding.TextDecoder().decode(this.getBytes(this.getUint16()));
   }
 
   public getStr(): string {

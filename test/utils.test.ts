@@ -1,7 +1,7 @@
 import {} from 'jest';
 
 import { parseList } from '../src/parsing/list';
-import { tokenize, tokenizeCSS } from '../src/utils';
+import { fastHash, tokenize, tokenizeCSS } from '../src/utils';
 import { loadAllLists } from './utils';
 
 expect.extend({
@@ -32,6 +32,16 @@ function checkCollisions(filters) {
   }
 }
 
+function checkTokens(str: string, tokens: string[]) {
+  const hashedTokens: number[] = tokens.map(fastHash);
+  expect(hashedTokens).toEqual(tokenize(str));
+}
+
+function checkCSSTokens(str: string, tokens: string[]) {
+  const hashedTokens: number[] = tokens.map(fastHash);
+  expect(hashedTokens).toEqual(tokenizeCSS(str));
+}
+
 describe('Utils', () => {
   describe('fastHash', () => {
     const { networkFilters, cosmeticFilters } = parseList(loadAllLists());
@@ -46,16 +56,17 @@ describe('Utils', () => {
   });
 
   it('#tokenize', () => {
-    expect(tokenize('', false)).toEqual([]);
-    expect(tokenize('foo', false)).toEqual(['foo']);
-    expect(tokenize('foo/bar', false)).toEqual(['foo', 'bar']);
-    expect(tokenize('foo-bar', false)).toEqual(['foo', 'bar']);
-    expect(tokenize('foo.bar', false)).toEqual(['foo', 'bar']);
+    checkTokens('', []);
+    checkTokens('', []);
+    checkTokens('foo', ['foo']);
+    checkTokens('foo/bar', ['foo', 'bar']);
+    checkTokens('foo-bar', ['foo', 'bar']);
+    checkTokens('foo.bar', ['foo', 'bar']);
   });
 
   it('#tokenizeCSS', () => {
-    expect(tokenizeCSS('', false)).toEqual([]);
-    expect(tokenizeCSS('.selector', false)).toEqual(['.selector']);
-    expect(tokenizeCSS('.selector-foo', false)).toEqual(['.selector-foo']);
+    checkCSSTokens('', []);
+    checkCSSTokens('.selector', ['.selector']);
+    checkCSSTokens('.selector-foo', ['.selector-foo']);
   });
 });

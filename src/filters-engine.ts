@@ -1,4 +1,4 @@
-import { parse } from 'tldjs';
+import tldjs from 'tldjs';
 import { matchCosmeticFilter, matchNetworkFilter } from './filters-matching';
 import networkFiltersOptimizer from './optimizer';
 import { CosmeticFilter } from './parsing/cosmetic-filter';
@@ -255,7 +255,7 @@ export class CosmeticFilterBucket {
 export function processRawRequest(request) {
   // Extract hostname
   const url = request.url.toLowerCase();
-  const { hostname, domain } = parse(url);
+  const { hostname, domain } = tldjs.parse(url);
 
   // Process source url
   let sourceUrl = request.sourceUrl;
@@ -267,7 +267,7 @@ export function processRawRequest(request) {
     // leave `sourceHostname` and `sourceGD` as empty strings to allow
     // some filter matching on the request URL itself.
     sourceUrl = sourceUrl.toLowerCase();
-    const sourceUrlParts = parse(sourceUrl);
+    const sourceUrlParts = tldjs.parse(sourceUrl);
     sourceHostname = sourceUrlParts.hostname || '';
     sourceGD = sourceUrlParts.domain || '';
   }

@@ -1,5 +1,3 @@
-import { fast1a32 } from 'fnv-plus';
-
 /***************************************************************************
  *  Bitwise helpers
  * ************************************************************************* */
@@ -16,8 +14,20 @@ export function clearBit(n: number, mask: number): number {
   return n & ~mask;
 }
 
-export function fastHash(str) {
-  return fast1a32(str);
+// TODO - switch to fnv-plus when bundling issues are solved
+export function fastHash(str: string): number {
+  let hash = 0;
+
+  if (str.length === 0) {
+    return hash;
+  }
+
+  for (let i = 0; i < str.length; i += 1) {
+    const ch = str.charCodeAt(i);
+    hash = (((hash << 5) - hash) + ch) >>> 0;
+  }
+
+  return hash;
 }
 
 // https://jsperf.com/string-startswith/21
@@ -95,7 +105,7 @@ function isAllowedCSS(ch: number): boolean {
   );
 }
 
-function fastTokenizer(pattern, isAllowedCode, allowRegexSurround = false, hash = false) {
+function fastTokenizer(pattern, isAllowedCode, allowRegexSurround = false) {
   const tokens: number[] = [];
   let inside: boolean = false;
   let start = 0;
@@ -114,26 +124,22 @@ function fastTokenizer(pattern, isAllowedCode, allowRegexSurround = false, hash 
       inside = false;
       // Should not be followed by '*'
       if (allowRegexSurround || ch !== 42) {
-        tokens.push(pattern.substr(start, length));
+        tokens.push(fastHash(pattern.substr(start, length)));
       }
     }
   }
 
   if (inside) {
-    tokens.push(pattern.substr(start, length));
-  }
-
-  if (hash) {
-    return tokens.map(fastHash);
+    tokens.push(fastHash(pattern.substr(start, length)));
   }
 
   return tokens;
 }
 
-export function tokenize(pattern: string, hash = true): number[] {
-  return fastTokenizer(pattern, isAllowed, false, hash);
+export function tokenize(pattern: string): number[] {
+  return fastTokenizer(pattern, isAllowed, false);
 }
 
-export function tokenizeCSS(pattern: string, hash = true): number[] {
-  return fastTokenizer(pattern, isAllowedCSS, true, hash);
+export function tokenizeCSS(pattern: string): number[] {
+  return fastTokenizer(pattern, isAllowedCSS, true);
 }
