@@ -1,4 +1,4 @@
-import { NetworkFilter } from '../parsing/network-filter';
+import NetworkFilter from '../types/filter';
 import { createFuzzySignature, fastStartsWith } from '../utils';
 
 function isAnchoredByHostname(

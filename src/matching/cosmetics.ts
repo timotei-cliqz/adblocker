@@ -1,5 +1,5 @@
 import { getPublicSuffix } from 'tldjs';
-import { CosmeticFilter } from '../parsing/cosmetic-filter';
+import CosmeticFilter from '../types/cosmetics';
 import { fastStartsWith } from '../utils';
 
 /* Checks that hostnamePattern matches at the end of the hostname.
