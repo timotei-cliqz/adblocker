@@ -47,6 +47,7 @@
     "typescript": "2.6.2"
   },
   "dependencies": {
+    "punycode": "^2.1.0",
     "tldjs": "2.2.0"
   }
 }
