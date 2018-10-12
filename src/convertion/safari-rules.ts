@@ -10,6 +10,30 @@ function isAscii(str: string) {
     return true;
 }
 
+function cleanDomain(domain: string) {
+  // if a domain has a star at the end replace that with the elements of the endingsArray
+  const endings: string[] = ["net","org","xxx","com","co.uk","de","fr","jp","es","ru"];
+  const domains: string[] = [];
+
+  if (domain.length > 2) {
+    if (domain[domain.length - 1] === "*" && domain[domain.length - 2] === ".") {
+      domain = domain.substring(0, domain.length - 1);
+      for (let i = 0; i < endings.length; i++) {
+        const ending: string = endings[i];
+        domains.push(domain + ending);
+      }
+    }
+    else {
+      domains.push(domain);
+    }
+  }
+  else {
+    domains.push(domain);
+  }
+
+  return domains;
+}
+
 export function convertCosmetics(cosmetics: CosmeticFilter) {
   if (cosmetics.isScriptBlock()) {
     return null;
@@ -28,9 +52,17 @@ export function convertCosmetics(cosmetics: CosmeticFilter) {
     cosmetics.getHostnames().forEach((hostname) => {
       if (isAscii(hostname)) {
         if (hostname.indexOf('~') === 0) {
-          notDomains.push('*' + hostname.substr(1).toLowerCase());
+          const domain: string = '*' + hostname.substr(1).toLowerCase();
+          const clean_domains: string[] = cleanDomain(domain);
+          for (let i = 0; i < clean_domains.length; i++) {
+            notDomains.push(clean_domains[i]);
+          }
         } else {
-          domains.push('*' + hostname.toLowerCase());
+          const domain: string = '*' + hostname.toLowerCase();
+          const clean_domains: string[] = cleanDomain(domain);
+          for (let i = 0; i < clean_domains.length; i++) {
+            domains.push(clean_domains[i]);
+          }
         }
       }
     });
