@@ -108,25 +108,30 @@ export function convertFilter(filter: NetworkFilter) {
 
   // url-filter
   let urlFilter = '';
-  if (filter.isPlain) {
-    if (filter.hasHostname() && isAscii(filter.getHostname())) {
-      urlFilter += '(.*)?' + filter.getHostname().toLowerCase() + '/';
+
+  function appendFilter() {
+    if (filter.isRegex()) {
+      urlFilter += filter.getRegex().source;
     } else {
-      return null;
+      let str = filter.getFilter();
+      str = str.replace(/([|.$+?{}()[\]\\])/g, '\\$1');
+      str = str.replace(/\*/g, '.*');
+      str = str.replace(/\^/g, '[,+|#/$?&;!*()]');
+      urlFilter += str;
     }
   }
 
-  // Handle regex
-  let str = filter.getFilter();
-
-  // Escape special regex characters: |.$+?{}()[]\
-  str = str.replace(/([|.$+?{}()[\]\\])/g, '\\$1');
-  // * can match anything
-  str = str.replace(/\*/g, '.*');
-  // ^ can match any separator or the end of the pattern
-  str = str.replace(/\^/g, '[,+|#/$?&;!*()]');
-
-  urlFilter += str;
+  if (filter.isPlain) {
+    if (filter.hasHostname() && isAscii(filter.getHostname())) {
+      let hostname = filter.getHostname().toLowerCase();
+      urlFilter += '(.*)?' + hostname.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      appendFilter();
+    } else {
+      urlFilter = '.*';
+      appendFilter();
+      urlFilter += '.*';
+    }
+  }
 
   // url-filter cannot be an empty string
   if (urlFilter === '') {

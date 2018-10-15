@@ -267,50 +267,50 @@ export function testRule(rule: any, type: FilterType, filter: any) {
 }
 
 export function convertAndValidateFilters(lists: string) {
-  const exceptionsDict = {'@@||www.google.*/ads/$~third-party,domain=google.ca|google.co.in|google.co.nz|google.co.uk|google.co.za|google.com|google.com.au|google.com.eg|google.de|google.es|google.ie|google.it': 194,
-  '@@||adservice.google.*/adsid/integrator.js$domain=twitch.tv': 5,
-  '@@||amazon-adsystem.com/aax2/apstag.js$domain=blastingnews.com|eurogamer.net|nintendolife.com|nydailynews.com|rockpapershotgun.com|twitch.tv|usgamer.net|vg247.com|wcvb.com': 4,
-  '@@||imasdk.googleapis.com^$domain=twitch.tv': 3,
-  '@@||ads.nicovideo.jp/assets/js/ads-*.js': 3,
-  '@@||ias.rakuten.co.jp^$domain=rakuten.co.jp': 7,
-  '@@||nyt.com^*/ad-view-manager.js$domain=nytimes.com': 1,
-  '@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com|wistv.com': 2,
-  '@@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=dibujos.net|ensonhaber.com|f5haber.com|marieclaire.fr|r7.com|radio-canada.ca|uol.com.br': 4,
-  '@@||pagead2.googlesyndication.com/pagead/show_companion_ad.js$domain=gamespot.com': 2,
-  '@@||aolcdn.com^*/adsWrapper.$domain=aol.com|engadget.com|games.com|huffingtonpost.com|mapquest.com|stylelist.ca': 4,
-  '@@||flvto.biz/scripts/ads.js': 2,
-  '@@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=allcatvideos.com|audiomack.com|beinsports.com|bloomberg.com|cbc.ca|cbsnews.com|cbssports.com|cnet.com|complex.com|cwtv.com|gamejolt.com|healthmeans.com|indystar.com|mobg.io|news.sky.com|play.ludigames.com|player.performgroup.com|powr.com|rumble.com|snopes.com|thestreet.com|theverge.com|usatoday.com|video.foxbusiness.com|video.foxnews.com|vidyomani.com|yiv.com': 7,
-  '@@||adservice.google.*/integrator.js$domain=gsmarena.com|nydailynews.com': 8,
-  '@@||bancodevenezuela.com/imagenes/publicidad/$~third-party': 8,
-  '@@||conative.de/serve/domain/158/config.js$domain=spiegel.de': 1,
-  '@@||conative.de^*/adscript.min.js$domain=spiegel.de': 1,
-  '@@||2mdn.net/instream/html5/ima3.js$domain=~superfilm.pl': 14,
-  '@@||media.net/bidexchange.js$domain=reuters.com': 3,
-  '@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=slideplayer.com|tampermonkey.net|thefreedictionary.com': 5,
-  '@@||pagead2.googlesyndication.com/pagead/js/*/show_ads_impl.js$domain=downloads.codefi.re|freeclaimbtc.xyz|globaldjmix.com|gsmdude.com|hulkusc.com|nlfreevpn.com|oldapps.com|pattayaone.net|receive-a-sms.com|slideplayer.com|talksms.com|tampermonkey.net|thefreedictionary.com|unlockpwd.com|uploadex.com|windows7themes.net': 3,
-  '@@||mobinozer.com^*/gads.js': 1,
-  '@@||mobinozer.com^*/advert.js': 1,
-  '@@||exoclick.com/ad_track.js': 14,
-  '@@||dianomi.com/partner/marketwatch/js/dianomi-marketwatch.js?$domain=marketwatch.com': 2,
-  '@@||google.com/adsense/search/ads.js$domain=armstrongmywire.com|atlanticbb.net|bestbuy.com|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|dish.net|forbbbs.org|gumtree.com.au|hargray.net|hawaiiantel.net|hickorytech.net|homeaway.co.uk|knology.net|livestrong.com|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|query.nytimes.com|rentals.com|search.rr.com|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|trustedreviews.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net|www.google.com|zoover.co.uk|zoover.com': 1,
-  '@@||folha.uol.com.br/paywall/js/1/publicidade.ads.js': 3,
-  '@@||adf.ly^$~third-party': 3,
-  '@@||ynet.co.il^*/ads.js': 1,
-  '@@||dashboard.marketgid.com^$~third-party': 1,
-  '@@||c1.popads.net/pop.js$domain=skidrowreloaded.com': 4,
-  '@@||ads.servebom.com/tmnhead.js$domain=livescience.com': 3,
-  '@@||k01k0.com^$domain=nme.com|trustedreviews.com': 8,
-  '@@||namesakeoscilloscopemarquis.com^*/ads.js$domain=~tvil.me': 4,
-  '@@||pcworld.com/www/js/ads/jquery.lazyload-ad.js': 1,
-  '@@||server.cpmstar.com/view.aspx?poolid=$domain=newgrounds.com|xfire.com': 26,
-  '@@||thenextweb.com/wp-content/advertisement.js': 3,
-  '@@||g.doubleclick.net/static/glade.js$domain=eurogamer.net|nintendolife.com|rockpapershotgun.com|usgamer.net|vg247.com': 2,
-  '@@||doubleclick.net/instream/ad_status.js$domain=eurogamer.net|nintendolife.com|rockpapershotgun.com|usgamer.net|vg247.com': 1,
-  '@@||warnerbros-d.openx.net^$domain=dramafever.com': 1,
-  '@@||hentai-foundry.com^*/ads.js': 2,
-  '@@||animenewsnetwork.com/javascripts/advertisement.js': 1,
-  '@@||admost.com/adx/js/admost.js$domain=mackolik.com|sahadan.com': 4,
-  '@@||exoclick.com/invideo.js': 2};
+  // const exceptionsDict = {'@@||www.google.*/ads/$~third-party,domain=google.ca|google.co.in|google.co.nz|google.co.uk|google.co.za|google.com|google.com.au|google.com.eg|google.de|google.es|google.ie|google.it': 194,
+  // '@@||adservice.google.*/adsid/integrator.js$domain=twitch.tv': 5,
+  // '@@||amazon-adsystem.com/aax2/apstag.js$domain=blastingnews.com|eurogamer.net|nintendolife.com|nydailynews.com|rockpapershotgun.com|twitch.tv|usgamer.net|vg247.com|wcvb.com': 4,
+  // '@@||imasdk.googleapis.com^$domain=twitch.tv': 3,
+  // '@@||ads.nicovideo.jp/assets/js/ads-*.js': 3,
+  // '@@||ias.rakuten.co.jp^$domain=rakuten.co.jp': 7,
+  // '@@||nyt.com^*/ad-view-manager.js$domain=nytimes.com': 1,
+  // '@@||s0.2mdn.net/instream/*$domain=cnet.com|nfl.com|wistv.com': 2,
+  // '@@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=dibujos.net|ensonhaber.com|f5haber.com|marieclaire.fr|r7.com|radio-canada.ca|uol.com.br': 4,
+  // '@@||pagead2.googlesyndication.com/pagead/show_companion_ad.js$domain=gamespot.com': 2,
+  // '@@||aolcdn.com^*/adsWrapper.$domain=aol.com|engadget.com|games.com|huffingtonpost.com|mapquest.com|stylelist.ca': 4,
+  // '@@||flvto.biz/scripts/ads.js': 2,
+  // '@@||imasdk.googleapis.com/js/sdkloader/ima3.js$domain=allcatvideos.com|audiomack.com|beinsports.com|bloomberg.com|cbc.ca|cbsnews.com|cbssports.com|cnet.com|complex.com|cwtv.com|gamejolt.com|healthmeans.com|indystar.com|mobg.io|news.sky.com|play.ludigames.com|player.performgroup.com|powr.com|rumble.com|snopes.com|thestreet.com|theverge.com|usatoday.com|video.foxbusiness.com|video.foxnews.com|vidyomani.com|yiv.com': 7,
+  // '@@||adservice.google.*/integrator.js$domain=gsmarena.com|nydailynews.com': 8,
+  // '@@||bancodevenezuela.com/imagenes/publicidad/$~third-party': 8,
+  // '@@||conative.de/serve/domain/158/config.js$domain=spiegel.de': 1,
+  // '@@||conative.de^*/adscript.min.js$domain=spiegel.de': 1,
+  // '@@||2mdn.net/instream/html5/ima3.js$domain=~superfilm.pl': 14,
+  // '@@||media.net/bidexchange.js$domain=reuters.com': 3,
+  // '@@||pagead2.googlesyndication.com/pagead/js/adsbygoogle.js$domain=slideplayer.com|tampermonkey.net|thefreedictionary.com': 5,
+  // '@@||pagead2.googlesyndication.com/pagead/js/*/show_ads_impl.js$domain=downloads.codefi.re|freeclaimbtc.xyz|globaldjmix.com|gsmdude.com|hulkusc.com|nlfreevpn.com|oldapps.com|pattayaone.net|receive-a-sms.com|slideplayer.com|talksms.com|tampermonkey.net|thefreedictionary.com|unlockpwd.com|uploadex.com|windows7themes.net': 3,
+  // '@@||mobinozer.com^*/gads.js': 1,
+  // '@@||mobinozer.com^*/advert.js': 1,
+  // '@@||exoclick.com/ad_track.js': 14,
+  // '@@||dianomi.com/partner/marketwatch/js/dianomi-marketwatch.js?$domain=marketwatch.com': 2,
+  // '@@||google.com/adsense/search/ads.js$domain=armstrongmywire.com|atlanticbb.net|bestbuy.com|bresnan.net|broadstripe.net|buckeyecablesystem.net|cableone.net|centurylink.net|charter.net|cincinnatibell.net|dish.net|forbbbs.org|gumtree.com.au|hargray.net|hawaiiantel.net|hickorytech.net|homeaway.co.uk|knology.net|livestrong.com|mediacomtoday.com|midco.net|mybendbroadband.com|mybrctv.com|mycenturylink.com|myconsolidated.net|myepb.net|mygrande.net|mygvtc.com|myhughesnet.com|myritter.com|northstate.net|nwcable.net|query.nytimes.com|rentals.com|search.rr.com|searchresults.verizon.com|suddenlink.net|surewest.com|synacor.net|tds.net|toshiba.com|trustedreviews.com|truvista.net|windstream.net|windstreambusiness.net|wowway.net|www.google.com|zoover.co.uk|zoover.com': 1,
+  // '@@||folha.uol.com.br/paywall/js/1/publicidade.ads.js': 3,
+  // '@@||adf.ly^$~third-party': 3,
+  // '@@||ynet.co.il^*/ads.js': 1,
+  // '@@||dashboard.marketgid.com^$~third-party': 1,
+  // '@@||c1.popads.net/pop.js$domain=skidrowreloaded.com': 4,
+  // '@@||ads.servebom.com/tmnhead.js$domain=livescience.com': 3,
+  // '@@||k01k0.com^$domain=nme.com|trustedreviews.com': 8,
+  // '@@||namesakeoscilloscopemarquis.com^*/ads.js$domain=~tvil.me': 4,
+  // '@@||pcworld.com/www/js/ads/jquery.lazyload-ad.js': 1,
+  // '@@||server.cpmstar.com/view.aspx?poolid=$domain=newgrounds.com|xfire.com': 26,
+  // '@@||thenextweb.com/wp-content/advertisement.js': 3,
+  // '@@||g.doubleclick.net/static/glade.js$domain=eurogamer.net|nintendolife.com|rockpapershotgun.com|usgamer.net|vg247.com': 2,
+  // '@@||doubleclick.net/instream/ad_status.js$domain=eurogamer.net|nintendolife.com|rockpapershotgun.com|usgamer.net|vg247.com': 1,
+  // '@@||warnerbros-d.openx.net^$domain=dramafever.com': 1,
+  // '@@||hentai-foundry.com^*/ads.js': 2,
+  // '@@||animenewsnetwork.com/javascripts/advertisement.js': 1,
+  // '@@||admost.com/adx/js/admost.js$domain=mackolik.com|sahadan.com': 4,
+  // '@@||exoclick.com/invideo.js': 2};
   const { networkFilters, cosmeticFilters } = parseList(lists, {'loadNetworkFilters': true, 'loadCosmeticFilters': true, 'debug': true});
   const rules: any[] = [];
   const exceptions: any[] = [];
@@ -319,11 +319,10 @@ export function convertAndValidateFilters(lists: string) {
     const filter = networkFilters[j];
     const rule = convertFilter(filter);
     if (rule !== null && rule !== undefined) {
+      console.log(filter.filter, ' | ', rule.trigger['url-filter']);
       testRule(rule, FilterType.network, filter);
       if (rule.action.type === 'ignore-previous-rules') {
-        if ((filter.rawLine || '') in exceptionsDict) {
-          exceptions.push(rule);
-        }
+        exceptions.push(rule);
       } else {
         rules.push(rule);
       }
@@ -333,12 +332,13 @@ export function convertAndValidateFilters(lists: string) {
   for (let i = 0; i < cosmeticFilters.length; i += 1) {
     const cosmetic = cosmeticFilters[i];
     const rule = convertCosmetics(cosmetic);
+    //console.log(cosmetic.rawLine);
     if (rule !== null && rule !== undefined) {
       testRule(rule, FilterType.cosmetic, cosmetic);
       rules.push(rule);
     }
   }
-  // console.log("YALOOOOOO  ==  ", exceptions.length);
+
   // write the rules and the exceptions to different files
   const excep_JSON = JSON.stringify(exceptions);
   const rules_JSON = JSON.stringify(rules);
@@ -363,19 +363,19 @@ export function convertAndValidateFilters(lists: string) {
 }
 
 const adblockerLists = [
-  //'https://easylist.to/easylist/easylist.txt',
-  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt',
-  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt',
-  //'/https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt',
-  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt',
-  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt',
-  'https://easylist.to/easylistgermany/easylistgermany.txt',
   'https://easylist.to/easylist/easylist.txt',
+  'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt',
   'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt',
-  'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt',
-  'ttps://easylist-downloads.adblockplus.org/antiadblockfilters.txt',
-  'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt',
   'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt',
+  'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt',
+  'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt',
+  'https://easylist.to/easylistgermany/easylistgermany.txt',
+  //'https://easylist.to/easylist/easylist.txt',
+  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt',
+  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt',
+  //'https://easylist-downloads.adblockplus.org/antiadblockfilters.txt',
+  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt',
+  //'https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt',
 ];
 
 // const antitrackingLists = [
