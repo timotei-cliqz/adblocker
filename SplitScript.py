@@ -60,7 +60,7 @@ with open(rulesJsonPath, 'r') as inputfile:
         fileString = fileString[0:len(fileString)-1]
         fileString += ']'
 
-        fileName = outputPath + 'adblocker_' + str(i) + '.json'
+        fileName = outputPath + 'adblockerFile_' + str(i) + '.json'
         file = open(fileName, 'w+')
         file.write(fileString)
         file.close()
